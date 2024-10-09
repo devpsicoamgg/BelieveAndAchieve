@@ -32,3 +32,24 @@ BelieveAndAchieve/
 └── assets/       # Carpeta para activos del juego. 
     ├── images/   # Imágenes del juego. 
 ```
+
+## Archivos no pusheados a github
+
+se ignoraron los siguientes tipos de archivo:
+
+```
+# Ignorar pycache - Archivos compilados y automáticos que no son necesarios en el control de versiones.
+__pycache__/  
+
+# Archivos de compilación - Archivos dados por scripts
+*.pyc        
+
+# Archivos de compilación
+*.pyo         # Archivos no necesarios para el control de versiones y producto de la compilación.
+
+# Entornos virtuales
+env/          # Posibles dependencias del proyecto que son relativos a seguridad.
+
+# Archivos de configuración de IDE
+*.vscode/     # Archivo de configuración VSC.
+```
