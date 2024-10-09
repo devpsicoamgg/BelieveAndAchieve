@@ -20,3 +20,15 @@ Para configurar el juego en tu máquina local, asegúrate de tener los siguiente
 
 **PyGame**: biblioteca para ejecutar el juego que proporciona funcionalidades para crear gráficos, sonidos y controles. Abre tu terminal o símbolo del sistema para comprobar si Python está instalado escribiendo `python --version`. Para instalar PyGame, usa el comando `pip install pygame`, que descargará e instalará la biblioteca necesaria para construir y ejecutar el juego.
 
+## Estructura del Proyecto
+
+El proyecto está organizado de la siguiente manera:
+
+```
+BelieveAndAchieve/ 
+│ 
+├── main.py       # Punto de entrada del juego. 
+├── constants.py  # Todas las constantes del juego.  
+└── assets/       # Carpeta para activos del juego. 
+    ├── images/   # Imágenes del juego. 
+```
