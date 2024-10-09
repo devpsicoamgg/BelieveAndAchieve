@@ -1,0 +1,12 @@
+# Ignorar pycache
+__pycache__/
+
+# Archivos de compilación
+*.pyc
+*.pyo
+
+# Entornos variables entorno
+env/
+
+# Archivos de configuración de IDE
+*.vscode/
