@@ -56,3 +56,23 @@ env/          # Posibles dependencias del proyecto que son relativos a seguridad
 # Archivos de configuración de IDE
 *.vscode/     # Archivo de configuración VSC.
 ```
+
+## Proceso de creación del juego
+
+Para crear el juego se realizó: 
+
+01.- Creación README.md (archivo en construcción)
+
+02.- Creación del main.py y estructura modularizada. 
+
+03.- Creación de .gitignore.
+
+04.- Creación de pantalla de bienvenida. 
+
+05.- Creación de player (jugador principal) y controles de movimientos. 
+
+06.- Sprites y animaciones (dibujos animados y animación acorde al juego). 
+
+07.- 
+
+
