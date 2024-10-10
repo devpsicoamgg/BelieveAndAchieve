@@ -1,6 +1,6 @@
 # Believe & Achieve
 
-**Believe & Achieve** es un juego de superación personal diseñado como un proyecto freelance para Kodland. Su objetivo es ayudar a los jugadores a desarrollar su autoestima y habilidades personales a través de desafíos interactivos. Este juego está pensado para ser una herramienta educativa, ideal para fomentar el crecimiento personal y la autoexploración en un ambiente lúdico y atractivo. El juego se centra en la auto-mejora y el desarrollo personal, ofreciendo a los jugadores una serie de desafíos que mejoran su autoestima y confianza. Los jugadores navegarán por diferentes niveles, se enfrentarán a enemigos y superarán obstáculos para crecer personalmente y alcanzar sus metas.
+**Believe & Achieve** es un juego de superación personal diseñado como proceso de selección a partir de un proyecto para cargo freelance en Kodland. Su objetivo es ayudar a los jugadores a desarrollar su autoestima y habilidades personales a través de desafíos interactivos. Este juego está pensado para ser una herramienta educativa, ideal para fomentar el crecimiento personal y la autoexploración en un ambiente lúdico y atractivo. El juego se centra en la auto-mejora y el desarrollo personal, ofreciendo a los jugadores una serie de desafíos que mejoran su autoestima y confianza. Los jugadores navegarán por diferentes niveles, se enfrentarán a enemigos y superarán obstáculos para crecer personalmente y alcanzar sus metas.
 
 ## Licencia
 
