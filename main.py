@@ -58,7 +58,7 @@ bullet_image_scaled = scaled_img(bullet_image, constants.SCALE_BULLET)
 weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery, bullet_img=bullet_image_scaled)
 
 class Enemy:
-    def __init__(self, x, y, animations):
+    def __init__(self, x, y, animations, situation):
         self.x = x
         self.y = y
         self.animations = animations
@@ -66,6 +66,7 @@ class Enemy:
         self.image = self.animations[self.frame_index]
         self.rect = self.image.get_rect(center=(self.x, self.y))
         self.speed = 2
+        self.situation = situation  # Nueva propiedad para la situación
 
     def update(self):
         self.frame_index += 0.1
@@ -76,6 +77,11 @@ class Enemy:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        # Dibujar el texto debajo del enemigo
+        font = pygame.font.Font(None, 28)
+        text_surface = font.render(self.situation, True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=(self.rect.centerx, self.rect.bottom + 15))
+        screen.blit(text_surface, text_rect)
 
     def move(self):
         self.y += self.speed
@@ -84,7 +90,21 @@ class Enemy:
             self.x = random.randint(0, constants.DIMENSIONS_WINDOW[0] - self.rect.width)
 
 def create_enemy():
-    return Enemy(random.randint(0, constants.DIMENSIONS_WINDOW[0]), random.randint(-100, -40), random.choice(animation_enemies))
+    situations = [
+    "Ansiedad",
+    "Depresión",
+    "No creer en sí mismo",
+    "Baja autoestima",
+    "Miedo al fracaso",
+    "Estrés crónico",
+    "Dificultades en las relaciones",
+    "Sensación de soledad",
+    "Perfeccionismo",
+    "Falta de motivación",
+    "Dudas sobre el futuro",
+    "Comparación con los demás",
+]
+    return Enemy(random.randint(0, constants.DIMENSIONS_WINDOW[0]), random.randint(-100, -40), random.choice(animation_enemies), random.choice(situations))
 
 enemies = []
 
