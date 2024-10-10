@@ -30,10 +30,10 @@ BelieveAndAchieve/
 ├── main.py           # Punto de entrada del juego. 
 ├── constants.py      # Todas las constantes del juego. 
 ├── player.py         # Clase del jugador y su comportamiento 
-├── start_screen.py   # Clase del jugador y su comportamiento 
+├── start_screen.py   # Clase de pantalla de inicio y su comportamiento (space)
 └── assets/           # Carpeta para activos del juego. 
     ├── images/       # Imágenes del juego. 
-    └── fonts/    # Fuentes del juego
+    └── fonts/        # Fuentes del juego
 ```
 
 ## Archivos no pusheados a github
