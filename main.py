@@ -1,10 +1,11 @@
 import pygame
 import constants
 import sys
+import os
+import random
 from player import Player
 from start_screen import StartScreen
 from weaponsOfKindness import WeaponOfKindness
-import os
 
 # Inicialización de PyGame
 pygame.init()
@@ -76,6 +77,37 @@ bullet_image_scaled = scaled_img(bullet_image, constants.SCALE_BULLET)
 # Instancia la clase para armas, incluyendo la imagen de la bala
 weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery, bullet_img=bullet_image_scaled)
 
+# Clase para los enemigos
+class Enemy:
+    def __init__(self, x, y, animations):
+        self.x = x
+        self.y = y
+        self.animations = animations
+        self.frame_index = 0
+        self.image = self.animations[self.frame_index]
+        self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.speed = 2  # Velocidad del enemigo
+
+    def update(self):
+        self.frame_index += 0.1  # Velocidad de la animación
+        if self.frame_index >= len(self.animations):
+            self.frame_index = 0
+        self.image = self.animations[int(self.frame_index)]
+        self.rect.topleft = (self.x, self.y)
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    def move(self):
+        self.y += self.speed  # Mueve al enemigo hacia abajo
+        # Reinicia la posición si sale de la pantalla
+        if self.y > constants.DIMENSIONS_WINDOW[1]:
+            self.y = random.randint(-100, -40)  # Regresa desde arriba
+            self.x = random.randint(0, constants.DIMENSIONS_WINDOW[0] - self.rect.width)  # Reubica horizontalmente
+
+# Lista de enemigos
+enemies = [Enemy(random.randint(0, constants.DIMENSIONS_WINDOW[0]), random.randint(-100, -40), random.choice(animation_enemies)) for _ in range(5)]  # Crea 5 enemigos
+
 # Bucle principal del juego
 def main_game():
     # Definición de variables para el movimiento del jugador.
@@ -99,6 +131,20 @@ def main_game():
         angle = (pygame.math.Vector2(mouse_x - weapon.position.x, mouse_y - weapon.position.y)).angle_to((1, 0))  # Calcula el ángulo hacia el ratón
         weapon.rotate(angle, player.flip)  # Rota el arma según el ángulo
         weapon.draw(screen)  
+
+        # Actualiza y dibuja enemigos
+        for enemy in enemies:
+            enemy.move()
+            enemy.update()
+            enemy.draw(screen)
+
+            # Detectar colisión con las balas
+            for bullet in weapon.bullets:  # Asumiendo que weapon.bullets es una lista de balas
+                if enemy.rect.colliderect(bullet.rect):
+                    # Aquí puedes agregar la lógica para eliminar al enemigo y la bala
+                    enemies.remove(enemy)  # Remueve el enemigo de la lista
+                    weapon.bullets.remove(bullet)  # Remueve la bala de la lista
+                    break  # Sale del bucle para evitar errores
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
