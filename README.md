@@ -73,6 +73,6 @@ Para crear el juego se realizó:
 
 06.- Sprites y animaciones (dibujos animados y animación acorde al juego). 
 
-07.- 
+07.- Armas de gentileza. 
 
 

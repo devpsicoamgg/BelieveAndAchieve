@@ -3,6 +3,7 @@ import constants
 import sys
 from player import Player
 from start_screen import StartScreen
+from weaponsOfKindness import WeaponOfKindness
 
 # Inicialización de PyGame
 pygame.init()
@@ -20,12 +21,17 @@ def scaled_img(image, scale):
 # Carga y escala las imágenes
 animations = []
 for i in range(7):
-    img = pygame.image.load(f'assets/images/characters/player/Player_{i}.png')
+    img = pygame.image.load(f'assets/images/characters/player/Player_{i}.png').convert_alpha()
     img_scaled = scaled_img(img, constants.SCALE_PLAYER)  
     animations.append(img_scaled)  
 
 # Creación del jugador
 player = Player(x=50, y=50, animations=animations)  
+
+# Instancia la clase
+weapon_image = pygame.image.load('assets/images/weaponsOfKindness/WeaponOfKindness..png').convert_alpha()
+weapon_image_scaled = scaled_img(weapon_image, constants.SCALE_WEAPON)  
+weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery)
 
 # Bucle y f() general del juego
 def main_game():
@@ -35,7 +41,7 @@ def main_game():
     move_left = False
     move_right = False
 
-    # velocidad del FPS
+    # Velocidad del FPS
     clock = pygame.time.Clock()
     
     run = True
@@ -45,6 +51,12 @@ def main_game():
         screen.fill(constants.BG_COLOR)  
 
         player.draw(screen)  
+
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        
+        weapon.update(player.shape.center)  
+        weapon.rotate(mouse_x, mouse_y)  
+        weapon.draw(screen)  
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -60,6 +72,10 @@ def main_game():
                     move_left = True
                 if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                     move_right = True
+
+                # Detectar la tecla de disparo (barra espaciadora)
+                if event.key == pygame.K_SPACE:  # Cambia esto si deseas usar otra tecla
+                    weapon.shoot()  # Llama al método shoot para mostrar el mensaje
 
             # Detectar cuando una tecla es soltada para retornar a false el movimiento
             if event.type == pygame.KEYUP:
@@ -99,3 +115,4 @@ start_screen.display()
 
 # Iniciar el juego principal
 main_game()
+
