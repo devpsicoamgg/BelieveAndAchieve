@@ -1,5 +1,5 @@
 import pygame
-import math
+
 
 class WeaponOfKindness():
     def __init__(self, image, x, y):
@@ -9,24 +9,31 @@ class WeaponOfKindness():
         self.position = pygame.Vector2(x, y)  
         self.rect = self.image.get_rect(center=(x, y))
 
-    def update(self, player_position):
-        # Centra el arma en el personaje
-        self.position = pygame.Vector2(player_position)
-        self.position.x += 30  
-        self.position.y -= 10  
+    def update(self, player_position, player_flip):
+        # Desempaqueta la posición del jugador
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        player_x, player_y = player_position
+
+        # Calcula la posición del arma en función de si el jugador está mirando hacia la izquierda o derecha
+        if player_flip:  # Jugador mirando hacia la izquierda
+            self.position.x = player_x - 25  # Ajusta la posición a la izquierda
+        else:  # Jugador mirando hacia la derecha
+            self.position.x = player_x + 25  # Ajusta la posición a la derecha
+
+        self.position.y = player_y - 5  # Mantiene la misma posición en Y
         self.rect = self.image.get_rect(center=self.position)
 
-    def rotate(self, target_x, target_y):
-        # Cálculo del arma y el target con trigonometría
-        self.angle = 0 
 
-        # Rotación del arma
+    def rotate(self, player_flip):
+ # Rotación del arma
         self.image = pygame.transform.rotate(self.original_image, self.angle)
 
-        # invertir
-        if target_x < self.position.x:
-            self.image = pygame.transform.flip(self.image, True, False)  
-        
+        # Invertir el arma dependiendo de la dirección del jugador
+        if player_flip:
+            self.image = pygame.transform.flip(self.image, True, False)
+        else:
+            self.image = self.original_image
+
         self.rect = self.image.get_rect(center=self.position)
 
     def draw(self, surface):

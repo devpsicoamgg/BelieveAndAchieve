@@ -28,8 +28,8 @@ for i in range(7):
 # Creación del jugador
 player = Player(x=50, y=50, animations=animations)  
 
-# Instancia la clase
-weapon_image = pygame.image.load('assets/images/weaponsOfKindness/WeaponOfKindness..png').convert_alpha()
+# Instancia la clase para armas
+weapon_image = pygame.image.load('assets/images/weaponsOfKindness/WeaponOfKindness.png').convert_alpha()
 weapon_image_scaled = scaled_img(weapon_image, constants.SCALE_WEAPON)  
 weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery)
 
@@ -53,9 +53,9 @@ def main_game():
         player.draw(screen)  
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        
-        weapon.update(player.shape.center)  
-        weapon.rotate(mouse_x, mouse_y)  
+      
+        weapon.update(player.shape.center, player.flip)
+        weapon.rotate(player.flip)
         weapon.draw(screen)  
 
         for event in pygame.event.get():
