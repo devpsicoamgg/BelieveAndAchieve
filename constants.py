@@ -1,4 +1,4 @@
-# 
+#CONSTANTES DE VENTANA
 WIDTH = 800
 HEIGHT = 600
 DIMENSIONS_WINDOW = (WIDTH, HEIGHT)
@@ -9,7 +9,11 @@ WHITE = (255, 255, 255)    # blanco
 GREEN = (76, 175, 80)      # Verde 
 YELLOW = (255, 235, 59)    # Amarillo 
 BLUE_SKY = (33, 150, 243)  # Azul 
-ORANGE = (255, 152, 0)     # Naranja 
+ORANGE = (255, 152, 0)     # PERSONAJE naranja
 PINK = (255, 105, 180)     # Rosa 
 BLACK = (  0,   0,  0)     # Negro
+
+#CONSTANTES DE PERSONAJE
+WIDTH_PLAYER = 20
+HEIGHT_PLAYER = 20
 
