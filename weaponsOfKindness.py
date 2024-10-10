@@ -11,9 +11,6 @@ class WeaponOfKindness:
         self.bullet_img = bullet_img  
         self.bullets = pygame.sprite.Group()  # Grupo para almacenar las balas
 
-        # Define la dirección inicial
-        self.direction = pygame.math.Vector2(1, 0)  # Dirección inicial a la derecha
-
     def update(self, player_position, player_flip):
         # Desempaqueta la posición del jugador
         player_x, player_y = player_position
@@ -31,8 +28,8 @@ class WeaponOfKindness:
         self.bullets.update()
 
     def rotate(self, angle, player_flip):
-        # Actualiza el ángulo del arma
-        self.angle = angle
+        # Limitar el ángulo entre -130 y 130
+        self.angle = max(-130, min(130, angle))
 
         # Rotación del arma
         self.image = pygame.transform.rotate(self.original_image, -self.angle)
@@ -43,16 +40,20 @@ class WeaponOfKindness:
 
         self.rect = self.image.get_rect(center=self.position)
 
-        # dirección de la bala según ángulo
-        self.direction = pygame.math.Vector2(1, 0).rotate(-self.angle)
-
-    def shoot(self):
+    def shoot(self, player_flip):
         # Crea una nueva bala y la agrega al grupo de balas
-        bullet_x = self.position.x + self.direction.x * 5  # Ajusta el desplazamiento para que salga del cañón
-        bullet_y = self.position.y + self.direction.y * 5  # Ajusta el desplazamiento para que salga del cañón
-        bullet = Bullet(self.bullet_img, bullet_x, bullet_y, -self.angle)  # Usar -self.angle para que la bala mantenga la rotación correcta
+        bullet_x = self.position.x
+        bullet_y = self.position.y
+
+        # Crear la dirección de la bala según el ángulo
+        direction = pygame.math.Vector2(1, 0).rotate(-self.angle)
+
+        # Invertir la dirección de la bala si el jugador está mirando a la izquierda
+        if player_flip:  # Si el jugador está mirando a la izquierda
+            direction.x *= -1  # Invierte la dirección X para lanzar a la izquierda
+
+        bullet = Bullet(self.bullet_img, bullet_x, bullet_y, direction)  # Pasa la dirección a la bala
         self.bullets.add(bullet)
-        #print(f"Disparo ddel arma {self.position} en ángulo {self.angle}")
 
     def draw(self, surface):
         # Dibuja el arma 
@@ -63,18 +64,17 @@ class WeaponOfKindness:
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, image, x, y, angle):
+    def __init__(self, image, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
 
         self.original_image = image
-        self.angle = angle
-        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.image = self.original_image
         self.rect = self.image.get_rect(center=(x, y))
         
         # Velocidad de la bala
         self.speed = constants.BULLET_SPEED
         # Dirección de la bala
-        self.direction = pygame.math.Vector2(1, 0).rotate(-self.angle)  # ROTACIONES SEGUN EL ANGULO DEL ARMA
+        self.direction = direction  # Usa la dirección pasada al constructor
 
     def update(self):
         # Mueve la bala en la dirección determinada
@@ -84,4 +84,3 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0 or self.rect.top > constants.DIMENSIONS_WINDOW[1] or \
            self.rect.right < 0 or self.rect.left > constants.DIMENSIONS_WINDOW[0]:
             self.kill()  # Elimina la bala del grupo
-
