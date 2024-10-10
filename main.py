@@ -108,8 +108,12 @@ class Enemy:
 # Lista de enemigos
 enemies = [Enemy(random.randint(0, constants.DIMENSIONS_WINDOW[0]), random.randint(-100, -40), random.choice(animation_enemies)) for _ in range(5)]  # Crea 5 enemigos
 
+# Contador de enemigos eliminados
+enemies_killed = 0
+
 # Bucle principal del juego
 def main_game():
+    global enemies_killed  # Usar la variable global para modificarla
     # Definición de variables para el movimiento del jugador.
     move_up = False
     move_down = False
@@ -144,7 +148,13 @@ def main_game():
                     # Aquí puedes agregar la lógica para eliminar al enemigo y la bala
                     enemies.remove(enemy)  # Remueve el enemigo de la lista
                     weapon.bullets.remove(bullet)  # Remueve la bala de la lista
+                    enemies_killed += 1  # Incrementa el contador
                     break  # Sale del bucle para evitar errores
+
+        # Dibuja el contador de enemigos eliminados en la pantalla
+        font = pygame.font.Font(None, 36)  # Fuente predeterminada de Pygame
+        text_surface = font.render(f'Obstáculos superados: {enemies_killed}', True, (255, 255, 255))  # Color blanco
+        screen.blit(text_surface, (10, 10))  # Dibuja el texto en la pantalla
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
