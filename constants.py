@@ -12,8 +12,16 @@ BLUE_SKY = (33, 150, 243)  # Azul
 ORANGE = (255, 152, 0)     # PERSONAJE naranja
 PINK = (255, 105, 180)     # Rosa 
 BLACK = (  0,   0,  0)     # Negro
+BG_COLOR = (  0,   0,  40)  # Negro
 
 #CONSTANTES DE PERSONAJE
 WIDTH_PLAYER = 20
 HEIGHT_PLAYER = 20
+
+
+# CONSTANTES DE MOVIMIENTO
+MOVE_SPEED = 5  
+FPS = 40  
+JUMP_HEIGHT = 10  
+
 
