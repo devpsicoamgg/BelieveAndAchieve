@@ -4,6 +4,7 @@ import sys
 from player import Player
 from start_screen import StartScreen
 from weaponsOfKindness import WeaponOfKindness
+import os
 
 # Inicialización de PyGame
 pygame.init()
@@ -13,14 +14,50 @@ screen = pygame.display.set_mode(constants.DIMENSIONS_WINDOW)
 pygame.display.set_caption('Believe 🌟 & Achieve 🪜 with Kodland')
 
 #**************Sprites***************
-# f() para escalar imágenes
+# Función para escalar imágenes
 def scaled_img(image, scale):
     return pygame.transform.scale(image, (int(image.get_size()[0] * scale), 
                                            int(image.get_size()[1] * scale)))
 
-# Carga y escala las imágenes del jugador
+# Función para contar elementos
+def count_elements(dir):
+    return len(os.listdir(dir))
+
+# Función para listar nombres de carpetas
+def name_folder(dir):
+    return os.listdir(dir)
+
+# Definición del directorio de enemigos
+dir_enemies = "assets/images/characters/enemies"
+kind_enemies = name_folder(dir_enemies)
+
+# Lista para almacenar las animaciones de los enemigos
+animation_enemies = []
+
+# Recorremos cada tipo de enemigo en el directorio de enemigos
+for enemy_type in kind_enemies:
+    enemy_path = os.path.join(dir_enemies, enemy_type)
+    enemy_animations = []
+
+    # Cuenta el número de imágenes según cada directorio
+    num_images = count_elements(enemy_path)
+
+    # Recorre cada imagen de animación del enemigo
+    for i in range(num_images):  
+        enemy_image_path = os.path.join(enemy_path, f'{enemy_type}_{i}.png')
+        if os.path.exists(enemy_image_path):
+            img = pygame.image.load(enemy_image_path).convert_alpha()
+            img_scaled = scaled_img(img, constants.SCALE_ENEMY)
+            enemy_animations.append(img_scaled)
+
+    # Agregar animaciones del enemigo a la lista principal
+    animation_enemies.append(enemy_animations)
+
+# Lista para almacenar las animaciones del jugador
 animations = []
-for i in range(7):
+
+# Carga y escala las imágenes del jugador
+for i in range(count_elements('assets/images/characters/player')):
     img = pygame.image.load(f'assets/images/characters/player/Player_{i}.png').convert_alpha()
     img_scaled = scaled_img(img, constants.SCALE_PLAYER)  
     animations.append(img_scaled)  
@@ -39,7 +76,7 @@ bullet_image_scaled = scaled_img(bullet_image, constants.SCALE_BULLET)
 # Instancia la clase para armas, incluyendo la imagen de la bala
 weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery, bullet_img=bullet_image_scaled)
 
-# Bucle y f() general del juego
+# Bucle principal del juego
 def main_game():
     # Definición de variables para el movimiento del jugador.
     move_up = False
@@ -53,13 +90,12 @@ def main_game():
     run = True
     while run:  
         clock.tick(constants.FPS)
-
         screen.fill(constants.BG_COLOR)  
 
         player.draw(screen)  
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        weapon.update(player.shape.center, player.flip)
+        weapon.update(player.shape.center, player.flip)  # Actualizado a solo 3 parámetros
         angle = (pygame.math.Vector2(mouse_x - weapon.position.x, mouse_y - weapon.position.y)).angle_to((1, 0))  # Calcula el ángulo hacia el ratón
         weapon.rotate(angle, player.flip)  # Rota el arma según el ángulo
         weapon.draw(screen)  
@@ -80,7 +116,7 @@ def main_game():
                     move_right = True
 
                 # Detectar la tecla de disparo (barra espaciadora)
-                if event.key == pygame.K_SPACE:  # Cambia esto si deseas usar otra tecla
+                if event.key == pygame.K_SPACE:
                     weapon.shoot()  # Llama al método shoot para mostrar el mensaje
 
             # Detectar cuando una tecla es soltada para retornar a false el movimiento
@@ -121,4 +157,3 @@ start_screen.display()
 
 # Iniciar el juego principal
 main_game()
-
