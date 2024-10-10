@@ -27,13 +27,16 @@ El proyecto está organizado de la siguiente manera:
 ```
 BelieveAndAchieve/ 
 │ 
-├── main.py           # Punto de entrada del juego. 
-├── constants.py      # Todas las constantes del juego. 
-├── player.py         # Clase del jugador y su comportamiento 
-├── start_screen.py   # Clase de pantalla de inicio y su comportamiento (space)
-└── assets/           # Carpeta para activos del juego. 
-    ├── images/       # Imágenes del juego. 
-    └── fonts/        # Fuentes del juego
+├── main.py                           # Punto de entrada del juego. 
+├── constants.py                      # Todas las constantes del juego. 
+├── player.py                         # Clase del jugador y su comportamiento 
+├── start_screen.py                   # Clase de pantalla de inicio y su comportamiento (space)
+├── weaponsOfKindness.py              # Clase de pantalla de inicio y su comportamiento (space)
+└── assets/                           # Carpeta para activos del juego. 
+    ├── fonts/                        # Fuentes del juego. 
+    └── images/                       # Imágenes del juego.
+      ├── characters/                 # Imagen del player.
+      ├── weaponsOfKindness/          # Imagen del player.
 ```
 
 ## Archivos no pusheados a github
@@ -74,5 +77,7 @@ Para crear el juego se realizó:
 06.- Sprites y animaciones (dibujos animados y animación acorde al juego). 
 
 07.- Armas de gentileza. 
+
+08.- Municiones y disparos -> en el mismo file de armas. 
 
 

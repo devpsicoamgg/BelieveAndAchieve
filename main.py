@@ -18,7 +18,7 @@ def scaled_img(image, scale):
     return pygame.transform.scale(image, (int(image.get_size()[0] * scale), 
                                            int(image.get_size()[1] * scale)))
 
-# Carga y escala las imágenes
+# Carga y escala las imágenes del jugador
 animations = []
 for i in range(7):
     img = pygame.image.load(f'assets/images/characters/player/Player_{i}.png').convert_alpha()
@@ -28,10 +28,16 @@ for i in range(7):
 # Creación del jugador
 player = Player(x=50, y=50, animations=animations)  
 
-# Instancia la clase para armas
+# Carga y escala la imagen del arma
 weapon_image = pygame.image.load('assets/images/weaponsOfKindness/WeaponOfKindness.png').convert_alpha()
-weapon_image_scaled = scaled_img(weapon_image, constants.SCALE_WEAPON)  
-weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery)
+weapon_image_scaled = scaled_img(weapon_image, constants.SCALE_WEAPON)
+
+# Carga y escala la imagen de la bala
+bullet_image = pygame.image.load('assets/images/weaponsOfKindness/Bullet.png').convert_alpha()
+bullet_image_scaled = scaled_img(bullet_image, constants.SCALE_BULLET)
+
+# Instancia la clase para armas, incluyendo la imagen de la bala
+weapon = WeaponOfKindness(image=weapon_image_scaled, x=player.shape.centerx, y=player.shape.centery, bullet_img=bullet_image_scaled)
 
 # Bucle y f() general del juego
 def main_game():
@@ -53,9 +59,9 @@ def main_game():
         player.draw(screen)  
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
-      
         weapon.update(player.shape.center, player.flip)
-        weapon.rotate(player.flip)
+        angle = (pygame.math.Vector2(mouse_x - weapon.position.x, mouse_y - weapon.position.y)).angle_to((1, 0))  # Calcula el ángulo hacia el ratón
+        weapon.rotate(angle, player.flip)  # Rota el arma según el ángulo
         weapon.draw(screen)  
 
         for event in pygame.event.get():
